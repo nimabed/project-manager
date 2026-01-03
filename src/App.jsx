@@ -1,4 +1,5 @@
 import Sidebar from './components/Sidebar';
+import CreateMessageTemp from './components/CreateMessageTemp';
 
 
 import './App.css'
@@ -12,7 +13,7 @@ function App() {
 
 
       <main className="">
-        main
+        <CreateMessageTemp />
       </main>
     </div>
   )
