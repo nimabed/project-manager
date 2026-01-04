@@ -1,4 +1,4 @@
-
+import ProjectsBoard from './ProjectsBoard';
 
 export default function Sidebar({ mainToCreate }) {
 
@@ -11,8 +11,11 @@ export default function Sidebar({ mainToCreate }) {
       >
         + Add Project
       </button>
-      <div className="text-white">
-        Projects Board
+      <div className="w-[85%] flex flex-col space-y-5 mt-10">
+        <ProjectsBoard title="React Course" />
+        <ProjectsBoard title="Python Course" />
+        <ProjectsBoard title="React Root Course" />
+        <ProjectsBoard title="C++ Course" />
       </div>
     </div>
   )
