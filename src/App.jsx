@@ -14,13 +14,12 @@ function App() {
   return (
     <div className="min-h-screen grid grid-cols-[400px_1fr]">
       <section className="pt-10">
-        <Sidebar changeMainState={() => setMainState('create')} />
+        <Sidebar mainToCreate={() => setMainState('create')} />
       </section>
       <main className="">
-        {mainState === 'temp' && <CreateMessageTemp changeMainState={() => setMainState('create')} />}
-        {mainState === 'create' && <AddProjectForm />}
+        {mainState === 'temp' && <CreateMessageTemp mainToCreate={() => setMainState('create')} />}
+        {mainState === 'create' && <AddProjectForm mainToTemp={() => setMainState('temp')} />}
       </main>
-
     </div>
   )
 }

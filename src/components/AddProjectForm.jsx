@@ -1,9 +1,47 @@
-export default function AddProjectForm() {
+import { useRef, useState } from 'react';
+
+// const projects = [];
+
+export default function AddProjectForm({ mainToTemp }) {
+  const [projects, setProjects] = useState([]);
+  const titleRef = useRef();
+  const descriptRef = useRef();
+  const dateRef = useRef();
+
+  function saveInputs() {
+    setProjects(currProjects => [
+      {
+        title: titleRef.current.value,
+        description: descriptRef.current.value,
+        date: dateRef.current.value
+      }
+      , ...currProjects]);
+
+
+    [titleRef.current.value, descriptRef.current.value, dateRef.current.value] = ['', '', ''];
+
+    mainToTemp();
+  }
+
+
+  // console.log(projects);
+
+
   return (
     <div className="relative w-[70%] ml-7 top-1/4 flex flex-col space-y-6">
       <div className="text-end">
-        <button className="text-gray-900 text-lg mr-4 cursor-pointer hover:text-gray-900/80">Cancel</button>
-        <button className="py-3 px-5 bg-gray-900 text-white text-lg rounded-lg cursor-pointer hover:bg-gray-900/80">Save</button>
+        <button 
+          className="text-gray-900 text-lg mr-4 cursor-pointer hover:text-gray-900/80"
+          onClick={mainToTemp}
+        >
+          Cancel
+        </button>
+        <button 
+          className="py-3 px-5 bg-gray-900 text-white text-lg rounded-lg cursor-pointer hover:bg-gray-900/80"
+          onClick={saveInputs}
+        >
+          Save
+        </button>
       </div>
       <div>
         <label 
@@ -15,7 +53,8 @@ export default function AddProjectForm() {
         <input 
           type="text" 
           id="title"
-          className="w-full bg-stone-200 p-1 border-b-2 border-b-stone-300 text-lg rounded-sm focus:outline-0 focus:border-b-stone-700" 
+          className="w-full bg-stone-200 p-1 border-b-2 border-b-stone-300 text-lg rounded-sm focus:outline-0 focus:border-b-stone-700"
+          ref={titleRef} 
         />
       </div>
       <div>
@@ -28,6 +67,7 @@ export default function AddProjectForm() {
         <textarea 
           id="description" 
           className="w-full h-[5rem] bg-stone-200 p-1 border-b-2 border-b-stone-300 text-lg rounded-sm focus:outline-0 focus:border-b-stone-700"
+          ref={descriptRef}
         />
       </div>
       <div>
@@ -41,6 +81,7 @@ export default function AddProjectForm() {
           type="date" 
           id="date" 
           className="w-full bg-stone-200 p-1 border-b-2 border-b-stone-300 text-lg rounded-sm focus:outline-0 focus:border-b-stone-700"
+          ref={dateRef}
         />
       </div>
     </div>
