@@ -1,6 +1,6 @@
-import ProjectsBoard from './ProjectsBoard';
+import ProjectItem from './ProjectItem';
 
-export default function Sidebar({ mainToCreate }) {
+export default function Sidebar({ mainToCreate, projectItems }) {
 
   return (
     <div className="size-full bg-gray-900 rounded-tr-2xl pt-10 pl-7 ">
@@ -12,10 +12,9 @@ export default function Sidebar({ mainToCreate }) {
         + Add Project
       </button>
       <div className="w-[85%] flex flex-col space-y-5 mt-10">
-        <ProjectsBoard title="React Course" />
-        <ProjectsBoard title="Python Course" />
-        <ProjectsBoard title="React Root Course" />
-        <ProjectsBoard title="C++ Course" />
+        {
+          projectItems.map((item) => <ProjectItem key={item.id} title={item.title} />)
+        }
       </div>
     </div>
   )

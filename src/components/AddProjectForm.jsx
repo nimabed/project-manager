@@ -1,30 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-// const projects = [];
-
-export default function AddProjectForm({ mainToTemp }) {
-  const [projects, setProjects] = useState([]);
+export default function AddProjectForm({ mainToTemp, saveInputs }) {
   const titleRef = useRef();
   const descriptRef = useRef();
   const dateRef = useRef();
-
-  function saveInputs() {
-    setProjects(currProjects => [
-      {
-        title: titleRef.current.value,
-        description: descriptRef.current.value,
-        date: dateRef.current.value
-      }
-      , ...currProjects]);
-
-
-    [titleRef.current.value, descriptRef.current.value, dateRef.current.value] = ['', '', ''];
-
-    mainToTemp();
-  }
-
-
-  // console.log(projects);
 
 
   return (
@@ -38,7 +17,7 @@ export default function AddProjectForm({ mainToTemp }) {
         </button>
         <button 
           className="py-3 px-5 bg-gray-900 text-white text-lg rounded-lg cursor-pointer hover:bg-gray-900/80"
-          onClick={saveInputs}
+          onClick={() => saveInputs(titleRef, descriptRef, dateRef)}
         >
           Save
         </button>
