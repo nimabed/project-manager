@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import CreateMessageTemp from './components/CreateMessageTemp';
 import AddProjectForm from './components/AddProjectForm';
+import EditProject from './components/EditProject';
 import './App.css'
 
 function generateId(allProjects) {
@@ -40,11 +41,12 @@ function App() {
   return (
     <div className="min-h-screen grid grid-cols-[400px_1fr]">
       <section className="pt-10">
-        <Sidebar mainToCreate={() => setMainState('create')} projectItems={projects} />
+        <Sidebar mainToCreate={() => setMainState('create')} mainToEdit={() => setMainState('edit')} projectItems={projects} />
       </section>
       <main className="">
         {mainState === 'temp' && <CreateMessageTemp mainToCreate={() => setMainState('create')} />}
         {mainState === 'create' && <AddProjectForm mainToTemp={() => setMainState('temp')} saveInputs={saveProject} />}
+        {mainState === 'edit' && <EditProject />}
       </main>
     </div>
   )
