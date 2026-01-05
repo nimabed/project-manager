@@ -16,6 +16,8 @@ function generateId(allProjects) {
 function App() {
   const [mainState, setMainState] = useState('temp');
   const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState('');
+
 
   function saveProject(title, description, date) {
 
@@ -35,18 +37,24 @@ function App() {
     setMainState('temp');
   }
 
-  console.log(projects);
+  function showProject(projectId) {
+    setSelectedProject(projects.filter((item) => item.id === projectId)[0]);
+
+    if (mainState !== 'edit') {
+      setMainState('edit');
+    }
+  }
 
 
   return (
     <div className="min-h-screen grid grid-cols-[400px_1fr]">
       <section className="pt-10">
-        <Sidebar mainToCreate={() => setMainState('create')} mainToEdit={() => setMainState('edit')} projectItems={projects} />
+        <Sidebar mainToCreate={() => setMainState('create')} selectProject={showProject} projectItems={projects} />
       </section>
       <main className="">
         {mainState === 'temp' && <CreateMessageTemp mainToCreate={() => setMainState('create')} />}
         {mainState === 'create' && <AddProjectForm mainToTemp={() => setMainState('temp')} saveInputs={saveProject} />}
-        {mainState === 'edit' && <EditProject />}
+        {mainState === 'edit' && <EditProject project={selectedProject} />}
       </main>
     </div>
   )

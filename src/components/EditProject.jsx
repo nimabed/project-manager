@@ -1,20 +1,18 @@
-export default function EditProject() {
+export default function EditProject({ project }) {
   return (
     <div className="relative w-[70%] ml-7 top-1/5">
       <div className="pb-3 border-b-2 border-b-stone-300">
         <div className="flex justify-between mb-2">
-          <h2 className="text-3xl font-extrabold text-stone-700">Learning React</h2>
+          <h2 className="text-3xl font-extrabold text-stone-700">{project.title}</h2>
           <button
             className="cursor-pointer text-stone-700 hover:text-stone-700/80"
           >
             Delete
           </button>
         </div>
-        <span className="text-gray-400">Dec 29, 2024</span>
+        <span className="text-gray-400">{project.date}</span>
         <pre className="text-stone-700 mt-5 text-wrap">
-          Learn React from the group up.
-
-          Start with the basics, finish with advanced knowledge.
+          {project.description}
         </pre>
       </div>
 
