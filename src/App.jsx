@@ -5,10 +5,10 @@ import AddProjectForm from './components/AddProjectForm';
 import EditProject from './components/EditProject';
 import './App.css'
 
-function generateId(allProjects) {
+function generateId(arr) {
   let id = 0;
-  if(allProjects.length > 0) {
-    id = allProjects[0].id + 1;
+  if(arr.length > 0) {
+    id = arr[0].id + 1;
   }
   return id;
 }
@@ -16,7 +16,6 @@ function generateId(allProjects) {
 function App() {
   const [mainState, setMainState] = useState('temp');
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState('');
 
 
   function saveProject(title, description, date) {
@@ -27,7 +26,9 @@ function App() {
       id: projectId,
       title: title.current.value,
       description: description.current.value,
-      date: date.current.value
+      date: date.current.value,
+      tasks: [],
+      isSelected: false
     };
 
     setProjects(currProjects => [newProject, ...currProjects]);
@@ -38,7 +39,13 @@ function App() {
   }
 
   function selectProject(projectId) {
-    setSelectedProject(projects.filter((item) => item.id === projectId)[0]);
+    setProjects(currItems => 
+                  currItems.map((project) => 
+                    project.id === projectId
+                      ? {...project, isSelected: true}
+                      : {...project, isSelected: false}
+                  )
+    );
 
     if (mainState !== 'edit') {
       setMainState('edit');
@@ -52,7 +59,32 @@ function App() {
     setMainState('temp');
   }
 
-  // console.log(projects);
+  function addTask(projectId, taskRef) {
+    const newTask = taskRef.current.value;
+
+    setProjects(currProjects => 
+                  currProjects.map((project) => {
+                    if (project.id === projectId) {
+                      const taskId = generateId(project.tasks);
+                      return {
+                        ...project,
+                        tasks: [
+                          {
+                            id: taskId,
+                            task: newTask
+                          },
+                          ...project.tasks
+                        ]
+                      };
+                    }
+                    return project;
+                  }))       
+    taskRef.current.value = '';
+                                      
+  }
+
+
+  console.log(projects);
 
 
   return (
@@ -63,7 +95,7 @@ function App() {
       <main className="">
         {mainState === 'temp' && <CreateMessageTemp mainToCreate={() => setMainState('create')} />}
         {mainState === 'create' && <AddProjectForm mainToTemp={() => setMainState('temp')} saveInputs={saveProject} />}
-        {mainState === 'edit' && <EditProject project={selectedProject} deleteProject={deleteProject} />}
+        {mainState === 'edit' && <EditProject project={projects.filter(project => project.isSelected)[0]} deleteProject={deleteProject} addTask={addTask} />}
       </main>
     </div>
   )
