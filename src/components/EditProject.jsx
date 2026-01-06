@@ -1,4 +1,4 @@
-export default function EditProject({ project }) {
+export default function EditProject({ project, deleteProject }) {
   return (
     <div className="relative w-[70%] ml-7 top-1/5">
       <div className="pb-3 border-b-2 border-b-stone-300">
@@ -6,6 +6,7 @@ export default function EditProject({ project }) {
           <h2 className="text-3xl font-extrabold text-stone-700">{project.title}</h2>
           <button
             className="cursor-pointer text-stone-700 hover:text-stone-700/80"
+            onClick={() => deleteProject(project.id)}
           >
             Delete
           </button>
